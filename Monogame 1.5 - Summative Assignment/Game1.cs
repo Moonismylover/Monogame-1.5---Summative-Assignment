@@ -22,7 +22,6 @@ namespace Monogame_1._5___Summative_Assignment
         Texture2D background;
 
         Rectangle window;
-        Rectangle bgRect;
 
         SpriteFont introText;
 
@@ -46,7 +45,6 @@ namespace Monogame_1._5___Summative_Assignment
             _graphics.PreferredBackBufferHeight = 600;
             _graphics.ApplyChanges();
 
-            bgRect = new Rectangle(0, 0, window.Width, window.Height); 
 
             base.Initialize();
         }
@@ -89,7 +87,7 @@ namespace Monogame_1._5___Summative_Assignment
             }
             else if (screen == Screen.skit)
             {
-                _spriteBatch.Draw(background, bgRect, Color.White);
+                _spriteBatch.Draw(background, window, Color.White);
 
             }
             _spriteBatch.End();
