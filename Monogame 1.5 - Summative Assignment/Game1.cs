@@ -83,7 +83,8 @@ namespace Monogame_1._5___Summative_Assignment
             
             if (screen == Screen.intro)
             {
-                _spriteBatch.DrawString(introText, "Welcome to the play of 'Snape - The Third Wheel!'", new Vector2(50, 250), Color.White);
+                _spriteBatch.DrawString(introText, "Welcome to the play of ", new Vector2(250, 250), Color.White);
+                _spriteBatch.DrawString(introText, "'Snape - The Third Wheel!'", new Vector2(250, 300), Color.White);
             }
             else if (screen == Screen.skit)
             {
