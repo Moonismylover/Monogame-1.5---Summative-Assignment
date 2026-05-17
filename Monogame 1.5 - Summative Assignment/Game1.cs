@@ -30,6 +30,13 @@ namespace Monogame_1._5___Summative_Assignment
         Texture2D juliet;
 
         Rectangle window;
+        Rectangle snapeRect;
+        Rectangle romeoRect;
+        Rectangle julietRect;
+
+        Vector2 snapeSpeed;
+        Vector2 romeoSpeed;
+        Vector2 julietSpeed;
 
         SpriteFont introText;
 
@@ -55,6 +62,10 @@ namespace Monogame_1._5___Summative_Assignment
             _graphics.PreferredBackBufferWidth = 800;
             _graphics.PreferredBackBufferHeight = 600;
             _graphics.ApplyChanges();
+
+            snapeRect = new Rectangle(-230, 230, 230, 380);
+
+            snapeSpeed = new Vector2(2, 0);
 
 
             base.Initialize();
@@ -95,7 +106,12 @@ namespace Monogame_1._5___Summative_Assignment
             }
             else if (screen == Screen.snapeInterview)
             {
-
+                snapeRect.X += (int)snapeSpeed.X;
+                snapeRect.Y += (int)snapeSpeed.Y;
+                if (snapeRect.X == 400)
+                {
+                    snapeSpeed.X = 0;
+                }
             }
             
             base.Update(gameTime);
@@ -116,7 +132,7 @@ namespace Monogame_1._5___Summative_Assignment
             else if (screen == Screen.snapeInterview)
             {
                 _spriteBatch.Draw(newsbg, window, Color.White);
-
+                _spriteBatch.Draw(snape, snapeRect, Color.White);
             }
             _spriteBatch.End();
 
