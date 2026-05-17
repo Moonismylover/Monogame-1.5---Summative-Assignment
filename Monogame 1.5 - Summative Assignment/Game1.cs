@@ -22,7 +22,12 @@ namespace Monogame_1._5___Summative_Assignment
 
         Screen screen;
 
-        Texture2D background;
+        Texture2D newsbg;
+        Texture2D hellbg;
+        Texture2D beachbg;
+        Texture2D snape;
+        Texture2D romeo;
+        Texture2D juliet;
 
         Rectangle window;
 
@@ -59,8 +64,15 @@ namespace Monogame_1._5___Summative_Assignment
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            background = Content.Load<Texture2D>("background");
+            newsbg = Content.Load<Texture2D>("News");
+            hellbg = Content.Load<Texture2D>("Hell");
+            beachbg = Content.Load<Texture2D>("Beach");
+            romeo = Content.Load<Texture2D>("Romeo");
+            juliet = Content.Load<Texture2D>("Juliet");
+            snape = Content.Load<Texture2D>("Snape");
             introText = Content.Load<SpriteFont>("IntroText");
+            themeMusic = Content.Load<SoundEffect>("themeMusic");
+            themeInstance = themeMusic.CreateInstance();
         }
 
         protected override void Update(GameTime gameTime)
@@ -74,10 +86,16 @@ namespace Monogame_1._5___Summative_Assignment
 
             if (screen == Screen.intro)
             {
+                themeInstance.Play();
                 if (mouseState.LeftButton == ButtonState.Pressed && IsActive)
                 {
+                    themeInstance.Stop();
                     screen = Screen.snapeInterview;
                 }
+            }
+            else if (screen == Screen.snapeInterview)
+            {
+
             }
             
             base.Update(gameTime);
@@ -97,7 +115,7 @@ namespace Monogame_1._5___Summative_Assignment
             }
             else if (screen == Screen.snapeInterview)
             {
-                _spriteBatch.Draw(background, window, Color.White);
+                _spriteBatch.Draw(newsbg, window, Color.White);
 
             }
             _spriteBatch.End();
