@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Threading;
@@ -13,7 +14,9 @@ namespace Monogame_1._5___Summative_Assignment
         enum Screen
         {
             intro, 
-            skit,
+            snapeInterview,
+            julietGossipWithDemo,
+            romeosNewGirl,
             outro
         }
 
@@ -24,6 +27,9 @@ namespace Monogame_1._5___Summative_Assignment
         Rectangle window;
 
         SpriteFont introText;
+
+        SoundEffect themeMusic;
+        SoundEffectInstance themeInstance;
 
         Color bgColor = Color.DarkViolet;
 
@@ -62,16 +68,18 @@ namespace Monogame_1._5___Summative_Assignment
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            this.Window.Title = mouseState.Position.ToString();
+
             mouseState = Mouse.GetState();
 
             if (screen == Screen.intro)
             {
-                if (mouseState.LeftButton == ButtonState.Pressed)
+                if (mouseState.LeftButton == ButtonState.Pressed && IsActive)
                 {
-                    screen = Screen.skit;
+                    screen = Screen.snapeInterview;
                 }
             }
-
+            
             base.Update(gameTime);
         }
 
@@ -83,10 +91,11 @@ namespace Monogame_1._5___Summative_Assignment
             
             if (screen == Screen.intro)
             {
-                _spriteBatch.DrawString(introText, "Welcome to the play of ", new Vector2(250, 250), Color.White);
-                _spriteBatch.DrawString(introText, "'Snape - The Third Wheel!'", new Vector2(250, 300), Color.White);
+                _spriteBatch.DrawString(introText, "Welcome to the play of ", new Vector2(190, 200), Color.White);
+                _spriteBatch.DrawString(introText, "'Interview with Muggles!'", new Vector2(175, 250), Color.White);
+                _spriteBatch.DrawString(introText, "Please click to continue!", new Vector2(190, 300), Color.White);
             }
-            else if (screen == Screen.skit)
+            else if (screen == Screen.snapeInterview)
             {
                 _spriteBatch.Draw(background, window, Color.White);
 
@@ -98,3 +107,49 @@ namespace Monogame_1._5___Summative_Assignment
         }
     }
 }
+//Lesson 1-5 Summative Animation
+
+//You are to use skills learned from the lessons (1-5) that we have covered up to this point to create some
+//sort of animation. I recommend picking a favourite TV show, movie or game, but you may choose to do
+//anything that is school appropriate. You must use an enumeration in order to track which screen your
+//animation is on.
+//Your animation must have the following screens (at a minimum):
+//1.Intro / Title Screen
+//a.This may just be a static image if you like.
+//b.Play some background music and indicate to the user that they can proceed to the main
+//animation. They should be able to do this by hitting a key(s) of your choice.
+//i. When the audio stops playing, the animation should advance if the user decides
+//to wait.
+//2. Main Animation Screen(s)
+//a. There needs to be some sort of animation here. What it looks like is entirely up to you.
+//Experiment, try some new things.I’m looking for something interesting/creative.
+//i. For full marks, there needs to be more than 1 phase in this animation.
+//b. This animation may go on forever and require the user to end it or may run to a
+//conclusion and end itself.
+//c. For a Level 4+ there needs to be more than something basic repeating itself.
+//d. You may wish to use some the following (it is not necessary to do all of these things):
+//i.Sound Effects
+//ii.Music
+//iii. Randomness
+//iv. Response to user input (this is not a requirement for a level 4)
+//v. Text
+//3. End Screen
+//a. After the main animation is done, or the user has chosen to end it have some type of
+//farewell screen with some text as credits (do this with text).
+//b. The program can terminate after a set amount or time, or by having the user choose to
+//end it. Remember that if the user needs to do something there must be instructions.
+
+//Things you will need to do:
+//• Plan out what your theme will be.
+//• Plan out what will be on your 3 (or more) screens. Set up an enumeration to draw and run the
+//appropriate logic at the right time.
+//o Your window may change sizes between your title, main and ending screen .
+//• Use photoshop, or https://www.photopea.com/ to crop, resize, and give images transparent
+//backgrounds.
+//o The less scaling your program has to do the better.
+//o It makes a big difference having properly edited images.
+//• Use Audacity to convert and edit sound files to add to your animation.
+//• Keep your code organized.
+//o Be consistent when naming textures, sounds, rectangles, etc.
+//o Be consistent about where and how you initialize content.
+//o Use white space and comments in your code where appropriate.
