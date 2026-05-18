@@ -22,6 +22,8 @@ namespace Monogame_1._5___Summative_Assignment
 
         Screen screen;
 
+        bool targetHit = false;
+
         Texture2D newsbg;
         Texture2D hellbg;
         Texture2D beachbg;
@@ -72,6 +74,8 @@ namespace Monogame_1._5___Summative_Assignment
         Vector2 romeoSpeed;
         Vector2 julietSpeed;
 
+        float seconds;
+
         SpriteFont introText;
 
         SoundEffect themeMusic;
@@ -98,9 +102,11 @@ namespace Monogame_1._5___Summative_Assignment
             _graphics.ApplyChanges();
 
             snapeRect = new Rectangle(-230, 230, 230, 380);
+            sceneOneDialogueOneRect = new Rectangle(400, 50, 400, 100);
 
             snapeSpeed = new Vector2(2, 0);
 
+            seconds = 0;
 
             base.Initialize();
         }
@@ -129,6 +135,8 @@ namespace Monogame_1._5___Summative_Assignment
 
             mouseState = Mouse.GetState();
 
+            seconds += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             if (screen == Screen.intro)
             {
                 themeInstance.Play();
@@ -144,8 +152,10 @@ namespace Monogame_1._5___Summative_Assignment
                 snapeRect.Y += (int)snapeSpeed.Y;
                 if (snapeRect.X == 400)
                 {
+                    targetHit = true;
                     snapeSpeed.X = 0;
                 }
+
             }
             
             base.Update(gameTime);
@@ -167,8 +177,16 @@ namespace Monogame_1._5___Summative_Assignment
             {
                 _spriteBatch.Draw(newsbg, window, Color.White);
                 _spriteBatch.Draw(snape, snapeRect, Color.White);
+                if (targetHit == true)
+                {
+                    _spriteBatch.Draw(sceneOneDialogueOne, sceneOneDialogueOneRect, Color.White);
+                    if (seconds > 5)
+                    {
+
+                }
             }
             _spriteBatch.End();
+
 
 
             base.Draw(gameTime);
