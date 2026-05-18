@@ -128,6 +128,14 @@ namespace Monogame_1._5___Summative_Assignment
             introText = Content.Load<SpriteFont>("IntroText");
             themeMusic = Content.Load<SoundEffect>("themeMusic");
             themeInstance = themeMusic.CreateInstance();
+
+            sceneOneDialogueOne = Content.Load<Texture2D>("scene_1_dialogue_1");
+            sceneOneDialogueTwo = Content.load<Texture2D>("scene_1_dialogue_2");
+            sceneOneDialogueThree = Content.Load<Texture2D>("scene_1_dialogue_3");
+            sceneOneDialogueFour = Content.Load<Texture2D>("scene_1_dialogue_4");
+            sceneOneDialogueFive = Content.Load<Texture2D>("scene_1_dialogue_5");
+
+
         }
 
         protected override void Update(GameTime gameTime)
