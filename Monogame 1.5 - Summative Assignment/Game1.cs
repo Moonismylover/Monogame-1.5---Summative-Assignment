@@ -22,7 +22,8 @@ namespace Monogame_1._5___Summative_Assignment
 
         Screen screen;
 
-        bool dialogueOne = false;
+        bool timerStart = false;
+        bool dialogueOne = true;
         bool dialogueTwo = false;
         bool dialogueThree = false;
         bool dialogueFour = false;
@@ -195,42 +196,39 @@ namespace Monogame_1._5___Summative_Assignment
                 {
                     snapeRect.X = 400;
                     snapeSpeed.X = 0;
-                    seconds = 0;
+
+                    if (!timerStart)
+                    {
+                        seconds = 0;
+                        timerStart = true;
+                    }
 
                     if (seconds >= 2)
                     {
                         dialogueOne = true;
-                        seconds = 0;
-
-                        if (seconds >= 5)
-                        {
-                            dialogueTwo = true;
-                            seconds = 0;
-
-                            if (seconds >= 5)
-                            {
-                                dialogueThree = true;
-                                seconds = 0;
-
-                                if (seconds >= 5)
-                                {
-                                    dialogueFour = true;
-                                    seconds = 0;
-
-                                    if (seconds >= 5)
-                                    {
-                                        dialogueFive = true;
-                                        seconds = 0;
-                                    }
-                                }
-                            }
-
-                        }
                     }
 
+                    if (seconds >= 5)
+                    {
+                        dialogueTwo = true;
+                    }
+
+                    if (seconds >= 8)
+                    {
+                        dialogueThree = true;
+                    }
+
+                    if (seconds >= 11)
+                    {
+                        dialogueFour = true;
+                    }
+
+                    if (seconds >= 14)
+                    {
+                        dialogueFive = true;
+                    }
                 }
 
-          
             }
             
             base.Update(gameTime);
@@ -253,26 +251,42 @@ namespace Monogame_1._5___Summative_Assignment
             {
                 _spriteBatch.Draw(newsbg, window, Color.White);
                 _spriteBatch.Draw(snape, snapeRect, Color.White);
+
                 if (dialogueOne == true)
                 {
                     _spriteBatch.Draw(sceneOneDialogueOne, sceneOneDialogueOneRect, Color.White);
                 }
-                else if (dialogueTwo == true)
+
+                if (dialogueTwo == true)
                 {
                     _spriteBatch.Draw(sceneOneDialogueTwo, sceneOneDialogueTwoRect, Color.White);
+                    dialogueOne = false;
                 }
-                else if (dialogueThree == true)
+
+                if (dialogueThree == true)
                 {
                     _spriteBatch.Draw(sceneOneDialogueThree, sceneOneDialogueThreeRect, Color.White);
+                    dialogueOne = false;
+                    dialogueTwo = false;
                 }
-                else if (dialogueFour == true)
+
+                if (dialogueFour == true)
                 {
-                    _spriteBatch.Draw(sceneOneDialogueOne, sceneOneDialogueFourRect, Color.White);
+                    _spriteBatch.Draw(sceneOneDialogueFour, sceneOneDialogueFourRect, Color.White);
+                    dialogueOne = false;
+                    dialogueTwo = false;
+                    dialogueThree = false;
                 }
-                else if (dialogueFive == true)
+
+                if (dialogueFive == true)
                 {
-                    _spriteBatch.Draw(sceneOneDialogueOne, sceneOneDialogueFiveRect, Color.White);
+                    _spriteBatch.Draw(sceneOneDialogueFive, sceneOneDialogueFiveRect, Color.White);
+                    dialogueOne = false;
+                    dialogueTwo = false;
+                    dialogueThree = false;
+                    dialogueFour = false;
                 }
+                
             }
         _spriteBatch.End();
 
