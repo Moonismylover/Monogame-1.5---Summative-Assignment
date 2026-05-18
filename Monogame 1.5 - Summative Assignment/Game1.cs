@@ -23,6 +23,7 @@ namespace Monogame_1._5___Summative_Assignment
         Screen screen;
 
         bool targetHit = false;
+        bool songPlayed = false;
 
         Texture2D introbg;
         Texture2D newsbg;
@@ -104,7 +105,7 @@ namespace Monogame_1._5___Summative_Assignment
             _graphics.ApplyChanges();
 
             snapeRect = new Rectangle(-230, 230, 230, 380);
-            sceneOneDialogueOneRect = new Rectangle(400, 50, 400, 100);
+            sceneOneDialogueOneRect = new Rectangle(200, 200, 100, 100);
 
             snapeSpeed = new Vector2(2, 0);
 
@@ -134,16 +135,21 @@ namespace Monogame_1._5___Summative_Assignment
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            this.Window.Title = mouseState.Position.ToString();
-
             mouseState = Mouse.GetState();
             keyboardState = Keyboard.GetState();
+
+            this.Window.Title = mouseState.Position.ToString();
 
             seconds += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (screen == Screen.intro)
             {
-                themeInstance.Play();
+                if (!songPlayed)
+                {
+                    themeInstance.Play();
+                    songPlayed = true;
+                }
+
                 if (keyboardState.IsKeyDown(Keys.Space) && IsActive)
                 {
                     themeInstance.Stop();
@@ -157,9 +163,10 @@ namespace Monogame_1._5___Summative_Assignment
             else if (screen == Screen.snapeInterview)
             {
                 snapeRect.X += (int)snapeSpeed.X;
-                snapeRect.Y += (int)snapeSpeed.Y;
-                if (snapeRect.X == 400)
+
+                if (snapeRect.X >= 400)
                 {
+                    snapeRect.X = 400;
                     targetHit = true;
                     snapeSpeed.X = 0;
                 }
@@ -178,9 +185,9 @@ namespace Monogame_1._5___Summative_Assignment
             if (screen == Screen.intro)
             {
                 _spriteBatch.Draw(introbg, window, Color.White);
-                _spriteBatch.DrawString(introText, "Welcome to the play of ", new Vector2(190, 200), Color.White);
-                _spriteBatch.DrawString(introText, "'Interview with Muggles!'", new Vector2(175, 250), Color.White);
-                _spriteBatch.DrawString(introText, "Please press space to continue!", new Vector2(170, 300), Color.White);
+                _spriteBatch.DrawString(introText, "Welcome to the play of ", new Vector2(140, 200), Color.Black);
+                _spriteBatch.DrawString(introText, "'Interview with Muggles!'", new Vector2(140, 250), Color.Black);
+                _spriteBatch.DrawString(introText, "Please press space to \ncontinue!", new Vector2(140, 300), Color.Black);
             }
             else if (screen == Screen.snapeInterview)
             {
@@ -189,10 +196,6 @@ namespace Monogame_1._5___Summative_Assignment
                 if (targetHit == true)
                 {
                     _spriteBatch.Draw(sceneOneDialogueOne, sceneOneDialogueOneRect, Color.White);
-                    //if (seconds > 5)
-                    //{
-
-                    //}
                 }
             }
             _spriteBatch.End();
