@@ -41,6 +41,8 @@ namespace Monogame_1._5___Summative_Assignment
         Rectangle romeoRect;
         Texture2D juliet;
         Rectangle julietRect;
+        Texture2D demon;
+        Rectangle demonRect;
 
         Texture2D sceneOneDialogueOne;
         Rectangle sceneOneDialogueOneRect;
@@ -80,6 +82,7 @@ namespace Monogame_1._5___Summative_Assignment
         Vector2 snapeSpeed;
         Vector2 romeoSpeed;
         Vector2 julietSpeed;
+        Vector2 demonSpeed;
 
         float seconds;
 
@@ -134,6 +137,7 @@ namespace Monogame_1._5___Summative_Assignment
             romeo = Content.Load<Texture2D>("Romeo");
             juliet = Content.Load<Texture2D>("Juliet");
             snape = Content.Load<Texture2D>("Snape");
+            demon = Content.Load<Texture2D>("Demon");
             introText = Content.Load<SpriteFont>("IntroText");
             themeMusic = Content.Load<SoundEffect>("themeMusic");
             themeInstance = themeMusic.CreateInstance();
@@ -207,7 +211,7 @@ namespace Monogame_1._5___Summative_Assignment
                     {
                         dialogueOne = true;
                     }
-                    else if (seconds >= 5 && !dialogueTwo)
+                    else if (seconds >= 4 && !dialogueTwo)
                     {
                         dialogueTwo = true;
                     }
@@ -215,18 +219,29 @@ namespace Monogame_1._5___Summative_Assignment
                     {
                         dialogueThree = true;
                     }
-                    else if (seconds >= 11 && !dialogueFour)
+                    else if (seconds >= 12 && !dialogueFour)
                     {
                         dialogueFour = true;
                     }
-                    else if (seconds >= 14 && !dialogueFive)
+                    else if (seconds >= 16 && !dialogueFive)
                     {
                         dialogueFive = true;
                     }
                 }
+            }
+            else if (screen == Screen.julietGossipWithDemon)
+            {
 
             }
-            
+            else if (screen == Screen.romeosNewGirl)
+            {
+
+            }
+            else if (screen == Screen.outro)
+            {
+
+            }
+
             base.Update(gameTime);
         }
 
