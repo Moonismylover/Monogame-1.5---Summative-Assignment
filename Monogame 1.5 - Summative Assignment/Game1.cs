@@ -28,6 +28,7 @@ namespace Monogame_1._5___Summative_Assignment
         Texture2D snape;
         Texture2D romeo;
         Texture2D juliet;
+        Texture2D 
 
         Rectangle window;
         Rectangle snapeRect;
