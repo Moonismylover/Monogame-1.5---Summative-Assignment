@@ -25,15 +25,48 @@ namespace Monogame_1._5___Summative_Assignment
         Texture2D newsbg;
         Texture2D hellbg;
         Texture2D beachbg;
+
         Texture2D snape;
+        Rectangle snapeRect;
         Texture2D romeo;
+        Rectangle romeoRect;
         Texture2D juliet;
-        Texture2D 
+        Rectangle julietRect;
+
+        Texture2D sceneOneDialogueOne;
+        Rectangle sceneOneDialogueOneRect;
+        Texture2D sceneOneDialogueTwo;
+        Rectangle sceneOneDialogueTwoRect;
+        Texture2D sceneOneDialogueThree;
+        Rectangle sceneOneDialogueThreeRect;
+        Texture2D sceneOneDialogueFour;
+        Rectangle sceneOneDialogueFourRect;
+        Texture2D sceneOneDialogueFive;
+        Rectangle sceneOneDialogueFiveRect;
+
+        Texture2D sceneTwoDialogueOne;
+        Rectangle sceneTwoDialogueOneRect;
+        Texture2D sceneTwoDialogueTwo;
+        Rectangle sceneTwoDialogueTwoRect;
+        Texture2D sceneTwoDialogueThree;
+        Rectangle sceneTwoDialogueThreeRect;
+        Texture2D sceneTwoDialogueFour;
+        Rectangle sceneTwoDialogueFourRect;
+        Texture2D sceneTwoDialogueFive;
+        Rectangle sceneTwoDialogueFiveRect;
+
+        Texture2D sceneThreeDialogueOne;
+        Rectangle sceneThreeDialogueOneRect;
+        Texture2D sceneThreeDialogueTwo;
+        Rectangle sceneThreeDialogueTwoRect;
+        Texture2D sceneThreeDialogueThree;
+        Rectangle sceneThreeDialogueThreeRect;
+        Texture2D sceneThreeDialogueFour;
+        Rectangle sceneThreeDialogueFourRect;
+        Texture2D sceneThreeDialogueFive;
+        Rectangle sceneThreeDialogueFiveRect;
 
         Rectangle window;
-        Rectangle snapeRect;
-        Rectangle romeoRect;
-        Rectangle julietRect;
 
         Vector2 snapeSpeed;
         Vector2 romeoSpeed;
