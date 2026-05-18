@@ -38,15 +38,12 @@ namespace Monogame_1._5___Summative_Assignment
         Rectangle julietRect;
 
         Texture2D sceneOneDialogueOne;
-        Rectangle sceneOneDialogueOneRect;
+        Rectangle sceneOneSnapeRect;
         Texture2D sceneOneDialogueTwo;
-        Rectangle sceneOneDialogueTwoRect;
         Texture2D sceneOneDialogueThree;
-        Rectangle sceneOneDialogueThreeRect;
         Texture2D sceneOneDialogueFour;
-        Rectangle sceneOneDialogueFourRect;
         Texture2D sceneOneDialogueFive;
-        Rectangle sceneOneDialogueFiveRect;
+        Rectangle sceneOneNPCRect;
 
         Texture2D sceneTwoDialogueOne;
         Rectangle sceneTwoDialogueOneRect;
@@ -105,8 +102,9 @@ namespace Monogame_1._5___Summative_Assignment
             _graphics.ApplyChanges();
 
             snapeRect = new Rectangle(-230, 230, 230, 380);
-            sceneOneDialogueOneRect = new Rectangle(200, 200, 100, 100);
-
+            sceneOneSnapeRect = new Rectangle(270, 150, 200, 200);
+            sceneOneNPCRect = new Rectangle(0, 190, 200, 200);
+            
             snapeSpeed = new Vector2(2, 0);
 
             seconds = 0;
@@ -214,7 +212,27 @@ namespace Monogame_1._5___Summative_Assignment
                 _spriteBatch.Draw(snape, snapeRect, Color.White);
                 if (targetHit == true)
                 {
-                    _spriteBatch.Draw(sceneOneDialogueOne, sceneOneDialogueOneRect, Color.White);
+                    if (seconds > 2)
+                    {
+                        _spriteBatch.Draw(sceneOneDialogueOne, sceneOneSnapeRect, Color.White);
+                        seconds = 0;
+                        if (seconds > 4)
+                        {
+                            _spriteBatch.Draw(sceneOneDialogueTwo, sceneOneSnapeRect, Color.White);
+                            if (seconds > 4)
+                            {
+                                _spriteBatch.Draw(sceneOneDialogueThree, sceneOneSnapeRect, Color.White);
+                                if (seconds > 2)
+                                {
+                                    _spriteBatch.Draw(sceneOneDialogueFour, sceneOneSnapeRect, Color.White);
+                                    if (seconds > 3)
+                                    {
+                                        _spriteBatch.Draw(sceneOneDialogueFive, sceneOneSnapeRect, Color.White);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
             _spriteBatch.End();
