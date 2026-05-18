@@ -130,10 +130,18 @@ namespace Monogame_1._5___Summative_Assignment
             themeInstance = themeMusic.CreateInstance();
 
             sceneOneDialogueOne = Content.Load<Texture2D>("scene_1_dialogue_1");
-            sceneOneDialogueTwo = Content.load<Texture2D>("scene_1_dialogue_2");
+            sceneOneDialogueTwo = Content.Load<Texture2D>("scene_1_dialogue_2");
             sceneOneDialogueThree = Content.Load<Texture2D>("scene_1_dialogue_3");
             sceneOneDialogueFour = Content.Load<Texture2D>("scene_1_dialogue_4");
             sceneOneDialogueFive = Content.Load<Texture2D>("scene_1_dialogue_5");
+
+            sceneTwoDialogueOne = Content.Load<Texture2D>("scene_2_dialogue_1");
+            sceneTwoDialogueTwo = Content.Load<Texture2D>("scene_2_dialogue_2");
+            sceneTwoDialogueThree = Content.Load<Texture2D>("scene_2_dialogue_3");
+            sceneTwoDialogueFour = Content.Load<Texture2D>("scene_2_dialogue_4");
+            sceneTwoDialogueFive = Content.Load<Texture2D>("scne_2_dialogue_5");
+
+
 
 
         }
