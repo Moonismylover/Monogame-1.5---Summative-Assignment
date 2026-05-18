@@ -143,7 +143,7 @@ namespace Monogame_1._5___Summative_Assignment
 
             sceneThreeDialogueOne = Content.Load<Texture2D>("scene_3_dialogue_1");
             sceneThreeDialogueTwo = Content.Load<Texture2D>("scene_3_dialogue_2");
-            sceneThreeDialogueThree = Content.Load<Texture2D>("scene_dialogue_3");
+            sceneThreeDialogueThree = Content.Load<Texture2D>("scene_3_dialogue_3");
             sceneThreeDialogueFour = Content.Load<Texture2D>("scene_3_dialogue_4");
             sceneThreeDialogueFive = Content.Load<Texture2D>("scene_3_dialogue_5");
 
