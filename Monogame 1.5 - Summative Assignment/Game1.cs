@@ -22,7 +22,11 @@ namespace Monogame_1._5___Summative_Assignment
 
         Screen screen;
 
-        bool targetHit = false;
+        bool dialogueOne = false;
+        bool dialogueTwo = false;
+        bool dialogueThree = false;
+        bool dialogueFour = false;
+        bool dialogueFive = false;
         bool songPlayed = false;
 
         Texture2D introbg;
@@ -38,12 +42,15 @@ namespace Monogame_1._5___Summative_Assignment
         Rectangle julietRect;
 
         Texture2D sceneOneDialogueOne;
-        Rectangle sceneOneSnapeRect;
+        Rectangle sceneOneDialogueOneRect;
         Texture2D sceneOneDialogueTwo;
+        Rectangle sceneOneDialogueTwoRect;
         Texture2D sceneOneDialogueThree;
+        Rectangle sceneOneDialogueThreeRect;
         Texture2D sceneOneDialogueFour;
+        Rectangle sceneOneDialogueFourRect;
         Texture2D sceneOneDialogueFive;
-        Rectangle sceneOneNPCRect;
+        Rectangle sceneOneDialogueFiveRect;
 
         Texture2D sceneTwoDialogueOne;
         Rectangle sceneTwoDialogueOneRect;
@@ -102,9 +109,12 @@ namespace Monogame_1._5___Summative_Assignment
             _graphics.ApplyChanges();
 
             snapeRect = new Rectangle(-230, 230, 230, 380);
-            sceneOneSnapeRect = new Rectangle(270, 150, 200, 200);
-            sceneOneNPCRect = new Rectangle(0, 190, 200, 200);
-            
+            sceneOneDialogueOneRect = new Rectangle(270, 150, 200, 200);
+            sceneOneDialogueTwoRect = new Rectangle(270, 150, 200, 200);
+            sceneOneDialogueThreeRect = new Rectangle(270, 150, 200, 200);
+            sceneOneDialogueFourRect = new Rectangle(0, 180, 200, 200);
+            sceneOneDialogueFiveRect = new Rectangle(270, 150, 200, 200);
+
             snapeSpeed = new Vector2(2, 0);
 
             seconds = 0;
@@ -184,10 +194,43 @@ namespace Monogame_1._5___Summative_Assignment
                 if (snapeRect.X >= 400)
                 {
                     snapeRect.X = 400;
-                    targetHit = true;
                     snapeSpeed.X = 0;
+                    seconds = 0;
+
+                    if (seconds >= 2)
+                    {
+                        dialogueOne = true;
+                        seconds = 0;
+
+                        if (seconds >= 5)
+                        {
+                            dialogueTwo = true;
+                            seconds = 0;
+
+                            if (seconds >= 5)
+                            {
+                                dialogueThree = true;
+                                seconds = 0;
+
+                                if (seconds >= 5)
+                                {
+                                    dialogueFour = true;
+                                    seconds = 0;
+
+                                    if (seconds >= 5)
+                                    {
+                                        dialogueFive = true;
+                                        seconds = 0;
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+
                 }
 
+          
             }
             
             base.Update(gameTime);
@@ -198,7 +241,7 @@ namespace Monogame_1._5___Summative_Assignment
             GraphicsDevice.Clear(bgColor);
 
             _spriteBatch.Begin();
-            
+
             if (screen == Screen.intro)
             {
                 _spriteBatch.Draw(introbg, window, Color.White);
@@ -210,34 +253,28 @@ namespace Monogame_1._5___Summative_Assignment
             {
                 _spriteBatch.Draw(newsbg, window, Color.White);
                 _spriteBatch.Draw(snape, snapeRect, Color.White);
-                if (targetHit == true)
+                if (dialogueOne == true)
                 {
-                    if (seconds > 2)
-                    {
-                        _spriteBatch.Draw(sceneOneDialogueOne, sceneOneSnapeRect, Color.White);
-                        seconds = 0;
-                        if (seconds > 4)
-                        {
-                            _spriteBatch.Draw(sceneOneDialogueTwo, sceneOneSnapeRect, Color.White);
-                            if (seconds > 4)
-                            {
-                                _spriteBatch.Draw(sceneOneDialogueThree, sceneOneSnapeRect, Color.White);
-                                if (seconds > 2)
-                                {
-                                    _spriteBatch.Draw(sceneOneDialogueFour, sceneOneSnapeRect, Color.White);
-                                    if (seconds > 3)
-                                    {
-                                        _spriteBatch.Draw(sceneOneDialogueFive, sceneOneSnapeRect, Color.White);
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    _spriteBatch.Draw(sceneOneDialogueOne, sceneOneDialogueOneRect, Color.White);
+                }
+                else if (dialogueTwo == true)
+                {
+                    _spriteBatch.Draw(sceneOneDialogueTwo, sceneOneDialogueTwoRect, Color.White);
+                }
+                else if (dialogueThree == true)
+                {
+                    _spriteBatch.Draw(sceneOneDialogueThree, sceneOneDialogueThreeRect, Color.White);
+                }
+                else if (dialogueFour == true)
+                {
+                    _spriteBatch.Draw(sceneOneDialogueOne, sceneOneDialogueFourRect, Color.White);
+                }
+                else if (dialogueFive == true)
+                {
+                    _spriteBatch.Draw(sceneOneDialogueOne, sceneOneDialogueFiveRect, Color.White);
                 }
             }
-            _spriteBatch.End();
-
-
+        _spriteBatch.End();
 
             base.Draw(gameTime);
         }
