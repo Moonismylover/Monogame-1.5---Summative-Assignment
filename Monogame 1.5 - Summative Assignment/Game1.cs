@@ -23,7 +23,7 @@ namespace Monogame_1._5___Summative_Assignment
         Screen screen;
 
         bool timerStart = false;
-        bool dialogueOne = true;
+        bool dialogueOne = false;
         bool dialogueTwo = false;
         bool dialogueThree = false;
         bool dialogueFour = false;
@@ -112,9 +112,9 @@ namespace Monogame_1._5___Summative_Assignment
             snapeRect = new Rectangle(-230, 230, 230, 380);
             sceneOneDialogueOneRect = new Rectangle(270, 150, 200, 200);
             sceneOneDialogueTwoRect = new Rectangle(270, 150, 200, 200);
-            sceneOneDialogueThreeRect = new Rectangle(270, 150, 200, 200);
+            sceneOneDialogueThreeRect = new Rectangle(240, 150, 200, 200);
             sceneOneDialogueFourRect = new Rectangle(0, 180, 200, 200);
-            sceneOneDialogueFiveRect = new Rectangle(270, 150, 200, 200);
+            sceneOneDialogueFiveRect = new Rectangle(230, 290, 200, 150);
 
             snapeSpeed = new Vector2(2, 0);
 
@@ -203,27 +203,23 @@ namespace Monogame_1._5___Summative_Assignment
                         timerStart = true;
                     }
 
-                    if (seconds >= 2)
+                    if (seconds >= 1 && !dialogueOne)
                     {
                         dialogueOne = true;
                     }
-
-                    if (seconds >= 5)
+                    else if (seconds >= 5 && !dialogueTwo)
                     {
                         dialogueTwo = true;
                     }
-
-                    if (seconds >= 8)
+                    else if (seconds >= 8 && !dialogueThree)
                     {
                         dialogueThree = true;
                     }
-
-                    if (seconds >= 11)
+                    else if (seconds >= 11 && !dialogueFour)
                     {
                         dialogueFour = true;
                     }
-
-                    if (seconds >= 14)
+                    else if (seconds >= 14 && !dialogueFive)
                     {
                         dialogueFive = true;
                     }
@@ -252,41 +248,28 @@ namespace Monogame_1._5___Summative_Assignment
                 _spriteBatch.Draw(newsbg, window, Color.White);
                 _spriteBatch.Draw(snape, snapeRect, Color.White);
 
-                if (dialogueOne == true)
+                if (dialogueFive)
+                {
+                    _spriteBatch.Draw(sceneOneDialogueFive, sceneOneDialogueFiveRect, Color.White);
+                }
+                else if (dialogueFour)
+                {
+                    _spriteBatch.Draw(sceneOneDialogueFour, sceneOneDialogueFourRect, Color.White);
+                }
+                else if (dialogueThree)
+                {
+                    _spriteBatch.Draw(sceneOneDialogueThree, sceneOneDialogueThreeRect, Color.White);
+                }
+                else if (dialogueTwo)
+                {
+                    _spriteBatch.Draw(sceneOneDialogueTwo, sceneOneDialogueTwoRect, Color.White);
+                }
+                else if (dialogueOne)
                 {
                     _spriteBatch.Draw(sceneOneDialogueOne, sceneOneDialogueOneRect, Color.White);
                 }
 
-                if (dialogueTwo == true)
-                {
-                    _spriteBatch.Draw(sceneOneDialogueTwo, sceneOneDialogueTwoRect, Color.White);
-                    dialogueOne = false;
-                }
 
-                if (dialogueThree == true)
-                {
-                    _spriteBatch.Draw(sceneOneDialogueThree, sceneOneDialogueThreeRect, Color.White);
-                    dialogueOne = false;
-                    dialogueTwo = false;
-                }
-
-                if (dialogueFour == true)
-                {
-                    _spriteBatch.Draw(sceneOneDialogueFour, sceneOneDialogueFourRect, Color.White);
-                    dialogueOne = false;
-                    dialogueTwo = false;
-                    dialogueThree = false;
-                }
-
-                if (dialogueFive == true)
-                {
-                    _spriteBatch.Draw(sceneOneDialogueFive, sceneOneDialogueFiveRect, Color.White);
-                    dialogueOne = false;
-                    dialogueTwo = false;
-                    dialogueThree = false;
-                    dialogueFour = false;
-                }
-                
             }
         _spriteBatch.End();
 
