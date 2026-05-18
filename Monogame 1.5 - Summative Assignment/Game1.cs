@@ -24,6 +24,7 @@ namespace Monogame_1._5___Summative_Assignment
 
         bool targetHit = false;
 
+        Texture2D introbg;
         Texture2D newsbg;
         Texture2D hellbg;
         Texture2D beachbg;
@@ -84,6 +85,7 @@ namespace Monogame_1._5___Summative_Assignment
         Color bgColor = Color.DarkViolet;
 
         MouseState mouseState;
+        KeyboardState keyboardState;
 
         public Game1()
         {
@@ -115,6 +117,7 @@ namespace Monogame_1._5___Summative_Assignment
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            introbg = Content.Load<Texture2D>("IntroBackground");
             newsbg = Content.Load<Texture2D>("News");
             hellbg = Content.Load<Texture2D>("Hell");
             beachbg = Content.Load<Texture2D>("Beach");
@@ -134,15 +137,20 @@ namespace Monogame_1._5___Summative_Assignment
             this.Window.Title = mouseState.Position.ToString();
 
             mouseState = Mouse.GetState();
+            keyboardState = Keyboard.GetState();
 
             seconds += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (screen == Screen.intro)
             {
                 themeInstance.Play();
-                if (mouseState.LeftButton == ButtonState.Pressed && IsActive)
+                if (keyboardState.IsKeyDown(Keys.Space) && IsActive)
                 {
                     themeInstance.Stop();
+                    screen = Screen.snapeInterview;
+                }
+                else if (themeInstance.State == SoundState.Stopped)
+                {
                     screen = Screen.snapeInterview;
                 }
             }
@@ -169,9 +177,10 @@ namespace Monogame_1._5___Summative_Assignment
             
             if (screen == Screen.intro)
             {
+                _spriteBatch.Draw(introbg, window, Color.White);
                 _spriteBatch.DrawString(introText, "Welcome to the play of ", new Vector2(190, 200), Color.White);
                 _spriteBatch.DrawString(introText, "'Interview with Muggles!'", new Vector2(175, 250), Color.White);
-                _spriteBatch.DrawString(introText, "Please click to continue!", new Vector2(190, 300), Color.White);
+                _spriteBatch.DrawString(introText, "Please press space to continue!", new Vector2(170, 300), Color.White);
             }
             else if (screen == Screen.snapeInterview)
             {
@@ -180,9 +189,10 @@ namespace Monogame_1._5___Summative_Assignment
                 if (targetHit == true)
                 {
                     _spriteBatch.Draw(sceneOneDialogueOne, sceneOneDialogueOneRect, Color.White);
-                    if (seconds > 5)
-                    {
+                    //if (seconds > 5)
+                    //{
 
+                    //}
                 }
             }
             _spriteBatch.End();
@@ -193,17 +203,9 @@ namespace Monogame_1._5___Summative_Assignment
         }
     }
 }
-//Lesson 1-5 Summative Animation
 
-//You are to use skills learned from the lessons (1-5) that we have covered up to this point to create some
-//sort of animation. I recommend picking a favourite TV show, movie or game, but you may choose to do
-//anything that is school appropriate. You must use an enumeration in order to track which screen your
-//animation is on.
-//Your animation must have the following screens (at a minimum):
 //1.Intro / Title Screen
-//a.This may just be a static image if you like.
-//b.Play some background music and indicate to the user that they can proceed to the main
-//animation. They should be able to do this by hitting a key(s) of your choice.
+
 //i. When the audio stops playing, the animation should advance if the user decides
 //to wait.
 //2. Main Animation Screen(s)
