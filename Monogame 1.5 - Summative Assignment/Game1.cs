@@ -332,10 +332,76 @@ namespace Monogame_1._5___Summative_Assignment
                 }
 
              }
-            //else if (screen == Screen.romeosNewGirl)
-            //{
+            else if (screen == Screen.romeosNewGirl)
+            {
+                snapeRect.X += (int)snapeSpeed.X;
+                julietRect.X += (int)julietSpeed.X;
+                romeoRect.X += (int)romeoSpeed.X;
 
-            //}
+                    
+                    julietRect.X += (int)julietSpeed.X;
+                demonRect.Y += (int)demonSpeed.Y;
+
+                if (julietRect.X <= 500)
+                {
+                    julietRect.X = 500;
+                    julietSpeed.X = 0;
+                }
+
+                if (demonRect.Y >= 100)
+                {
+                    demonRect.Y = 100;
+                    demonSpeed.Y = 0;
+
+                    if (!timerStart)
+                    {
+                        seconds = 0;
+                        timerStart = true;
+                    }
+
+                    if (seconds >= 1 && !dialogueOne)
+                    {
+                        dialogueOne = true;
+                    }
+                    else if (seconds >= 4 && !dialogueTwo)
+                    {
+                        dialogueTwo = true;
+                    }
+                    else if (seconds >= 8 && !dialogueThree)
+                    {
+                        dialogueThree = true;
+                    }
+                    else if (seconds >= 12 && !dialogueFour)
+                    {
+                        dialogueFour = true;
+                    }
+                    else if (seconds >= 16 && !dialogueFive)
+                    {
+                        dialogueFive = true;
+                    }
+                    else if (seconds > 16)
+                    {
+                        continueButtonHover = true;
+
+                        if (mouseState.LeftButton == ButtonState.Pressed && continueButton_Rect.Contains(mouseState.Position))
+                        {
+                            seconds = 0;
+                            timerStart = false;
+
+                            dialogueOne = false;
+                            dialogueTwo = false;
+                            dialogueThree = false;
+                            dialogueFour = false;
+                            dialogueFive = false;
+
+                            continueButtonHover = false;
+
+                            screen = Screen.romeosNewGirl;
+                        }
+                    }
+                }
+
+            }
             //else if (screen == Screen.outro)
             //{
 
