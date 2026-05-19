@@ -123,13 +123,18 @@ namespace Monogame_1._5___Summative_Assignment
             sceneOneDialogueFourRect = new Rectangle(0, 180, 200, 200);
             sceneOneDialogueFiveRect = new Rectangle(230, 290, 200, 150);
 
-            julietRect = new Rectangle(-230, 230, 230, 230);
-            demonRect = new Rectangle(-300, 300, 230, 380);  
+            julietRect = new Rectangle(800, 200, 250, 400);
+            demonRect = new Rectangle(100, -250, 200, 250);
+            sceneTwoDialogueOneRect = new Rectangle(270, 70, 200, 200);
+            sceneTwoDialogueTwoRect = new Rectangle(390, 90, 200, 200);
+            sceneTwoDialogueThreeRect = new Rectangle(10, 50, 200, 200);
+            sceneTwoDialogueFourRect = new Rectangle(390, 130, 200, 200);
+            sceneTwoDialogueFiveRect = new Rectangle(420, 70, 200, 150);
 
             continueButton_Rect = new Rectangle(595, 5, 200, 100);
 
             snapeSpeed = new Vector2(3, 0);
-            julietSpeed = new Vector2(3, 0);
+            julietSpeed = new Vector2(-3, 0);
             demonSpeed = new Vector2(0, 3);
 
             seconds = 0;
@@ -153,7 +158,7 @@ namespace Monogame_1._5___Summative_Assignment
             themeMusic = Content.Load<SoundEffect>("themeMusic");
             themeInstance = themeMusic.CreateInstance();
 
-            continueButton = Content.Load<Texture2D>("continue");
+            continueButton = Content.Load<Texture2D>("continueSign");
 
             sceneOneDialogueOne = Content.Load<Texture2D>("scene_1_dialogue_1");
             sceneOneDialogueTwo = Content.Load<Texture2D>("scene_1_dialogue_2");
@@ -264,13 +269,19 @@ namespace Monogame_1._5___Summative_Assignment
             }
             else if (screen == Screen.julietGossipWithDemon)
             {
-                if (julietRect.X >= 500 && demonRect.Y >= 300)
+                julietRect.X += (int)julietSpeed.X; 
+                demonRect.Y += (int)demonSpeed.Y;
+
+                if (julietRect.X <= 500)
                 {
                     julietRect.X = 500;
-                    demonRect.Y = 300;
-
                     julietSpeed.X = 0;
-                    demonRect.Y = 0;
+                }
+
+                if (demonRect.Y >= 100)
+                {
+                    demonRect.Y = 100;
+                    demonSpeed.Y = 0;
 
                     if (!timerStart)
                     {
@@ -352,27 +363,27 @@ namespace Monogame_1._5___Summative_Assignment
                 _spriteBatch.Draw(newsbg, window, Color.White);
                 _spriteBatch.Draw(snape, snapeRect, Color.White);
 
-                if (dialogueOne)
+                if (dialogueFive)
                 {
-                    _spriteBatch.Draw(sceneOneDialogueOne, sceneOneDialogueOneRect, Color.White);
-                }
-                else if (dialogueTwo)
-                {
-                    _spriteBatch.Draw(sceneOneDialogueTwo, sceneOneDialogueTwoRect, Color.White);
-                }
-                else if (dialogueThree)
-                {
-                    _spriteBatch.Draw(sceneOneDialogueThree, sceneOneDialogueThreeRect, Color.White);
+                    _spriteBatch.Draw(sceneOneDialogueFive, sceneOneDialogueFiveRect, Color.White);
                 }
                 else if (dialogueFour)
                 {
                     _spriteBatch.Draw(sceneOneDialogueFour, sceneOneDialogueFourRect, Color.White);
                 }
-                else if (dialogueFive)
+                else if (dialogueThree)
                 {
-                    _spriteBatch.Draw(sceneOneDialogueFive, sceneOneDialogueFiveRect, Color.White);
+                    _spriteBatch.Draw(sceneOneDialogueThree, sceneOneDialogueThreeRect, Color.White);
                 }
-                
+                else if (dialogueTwo)
+                {
+                    _spriteBatch.Draw(sceneOneDialogueTwo, sceneOneDialogueTwoRect, Color.White);
+                }
+                else if (dialogueOne)
+                {
+                    _spriteBatch.Draw(sceneOneDialogueOne, sceneOneDialogueOneRect, Color.White);
+                }
+
                 if (continueButtonHover)
                 {
                     _spriteBatch.Draw(continueButton, continueButton_Rect, Color.White);
@@ -385,26 +396,26 @@ namespace Monogame_1._5___Summative_Assignment
                 _spriteBatch.Draw(juliet, julietRect, Color.White);
                 _spriteBatch.Draw(demon, demonRect, Color.White);
 
-                //if (dialogueOne)
-                //{
-                //    _spriteBatch.Draw(sceneOneDialogueOne, sceneOneDialogueOneRect, Color.White);
-                //}
-                //else if (dialogueTwo)
-                //{
-                //    _spriteBatch.Draw(sceneOneDialogueTwo, sceneOneDialogueTwoRect, Color.White);
-                //}
-                //else if (dialogueThree)
-                //{
-                //    _spriteBatch.Draw(sceneOneDialogueThree, sceneOneDialogueThreeRect, Color.White);
-                //}
-                //else if (dialogueFour)
-                //{
-                //    _spriteBatch.Draw(sceneOneDialogueFour, sceneOneDialogueFourRect, Color.White);
-                //}
-                //else if (dialogueFive)
-                //{
-                //    _spriteBatch.Draw(sceneOneDialogueFive, sceneOneDialogueFiveRect, Color.White);
-                //}
+                if (dialogueFive)
+                {
+                    _spriteBatch.Draw(sceneTwoDialogueFive, sceneTwoDialogueFiveRect, Color.White);
+                }
+                else if (dialogueFour)
+                {
+                    _spriteBatch.Draw(sceneTwoDialogueFour, sceneTwoDialogueFourRect, Color.White);
+                }
+                else if (dialogueThree)
+                {
+                    _spriteBatch.Draw(sceneTwoDialogueThree, sceneTwoDialogueThreeRect, Color.White);
+                }
+                else if (dialogueTwo)
+                {
+                    _spriteBatch.Draw(sceneTwoDialogueTwo, sceneTwoDialogueTwoRect, Color.White);
+                }
+                else if (dialogueOne)
+                {
+                    _spriteBatch.Draw(sceneTwoDialogueOne, sceneTwoDialogueOneRect, Color.White);
+                }
                 
             }
 
