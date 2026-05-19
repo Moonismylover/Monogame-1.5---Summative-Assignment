@@ -11,6 +11,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Content\continue_Button.png" />
     <None Remove="Content\Voicy_Harry potter theme.wav" />
     <None Remove="Icon.ico" />
     <None Remove="Icon.bmp" />

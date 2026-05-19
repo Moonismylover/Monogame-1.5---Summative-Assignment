@@ -15,7 +15,7 @@ namespace Monogame_1._5___Summative_Assignment
         {
             intro, 
             snapeInterview,
-            julietGossipWithDemo,
+            julietGossipWithDemon,
             romeosNewGirl,
             outro
         }
@@ -28,6 +28,7 @@ namespace Monogame_1._5___Summative_Assignment
         bool dialogueThree = false;
         bool dialogueFour = false;
         bool dialogueFive = false;
+        bool continueButtonHover = false;
         bool songPlayed = false;
 
         Texture2D introbg;
@@ -43,6 +44,9 @@ namespace Monogame_1._5___Summative_Assignment
         Rectangle julietRect;
         Texture2D demon;
         Rectangle demonRect;
+
+        Texture2D continueButton;
+        Rectangle continueButton_Rect;
 
         Texture2D sceneOneDialogueOne;
         Rectangle sceneOneDialogueOneRect;
@@ -119,7 +123,14 @@ namespace Monogame_1._5___Summative_Assignment
             sceneOneDialogueFourRect = new Rectangle(0, 180, 200, 200);
             sceneOneDialogueFiveRect = new Rectangle(230, 290, 200, 150);
 
-            snapeSpeed = new Vector2(2, 0);
+            julietRect = new Rectangle(-230, 230, 230, 230);
+            demonRect = new Rectangle(-300, 300, 230, 380);  
+
+            continueButton_Rect = new Rectangle(595, 5, 200, 100);
+
+            snapeSpeed = new Vector2(3, 0);
+            julietSpeed = new Vector2(3, 0);
+            demonSpeed = new Vector2(0, 3);
 
             seconds = 0;
 
@@ -141,6 +152,8 @@ namespace Monogame_1._5___Summative_Assignment
             introText = Content.Load<SpriteFont>("IntroText");
             themeMusic = Content.Load<SoundEffect>("themeMusic");
             themeInstance = themeMusic.CreateInstance();
+
+            continueButton = Content.Load<Texture2D>("continue");
 
             sceneOneDialogueOne = Content.Load<Texture2D>("scene_1_dialogue_1");
             sceneOneDialogueTwo = Content.Load<Texture2D>("scene_1_dialogue_2");
@@ -227,22 +240,98 @@ namespace Monogame_1._5___Summative_Assignment
                     {
                         dialogueFive = true;
                     }
+                    else if (seconds > 16)
+                    {
+                        continueButtonHover = true; 
+
+                        if (mouseState.LeftButton == ButtonState.Pressed && continueButton_Rect.Contains(mouseState.Position))
+                        {
+                            seconds = 0;
+                            timerStart = false;
+
+                            dialogueOne = false;
+                            dialogueTwo = false;
+                            dialogueThree = false;
+                            dialogueFour = false;
+                            dialogueFive = false;
+
+                            continueButtonHover = false;
+
+                            screen = Screen.julietGossipWithDemon;
+                        }
+                    }
                 }
             }
             else if (screen == Screen.julietGossipWithDemon)
             {
+                if (julietRect.X >= 500 && demonRect.Y >= 300)
+                {
+                    julietRect.X = 500;
+                    demonRect.Y = 300;
 
-            }
-            else if (screen == Screen.romeosNewGirl)
-            {
+                    julietSpeed.X = 0;
+                    demonRect.Y = 0;
 
-            }
-            else if (screen == Screen.outro)
-            {
+                    if (!timerStart)
+                    {
+                        seconds = 0;
+                        timerStart = true;
+                    }
 
-            }
+                    if (seconds >= 1 && !dialogueOne)
+                    {
+                        dialogueOne = true;
+                    }
+                    else if (seconds >= 4 && !dialogueTwo)
+                    {
+                        dialogueTwo = true;
+                    }
+                    else if (seconds >= 8 && !dialogueThree)
+                    {
+                        dialogueThree = true;
+                    }
+                    else if (seconds >= 12 && !dialogueFour)
+                    {
+                        dialogueFour = true;
+                    }
+                    else if (seconds >= 16 && !dialogueFive)
+                    {
+                        dialogueFive = true;
+                    }
+                    else if (seconds > 16)
+                    {
+                        continueButtonHover = true;
+
+                        if (mouseState.LeftButton == ButtonState.Pressed && continueButton_Rect.Contains(mouseState.Position))
+                        {
+                            seconds = 0;
+                            timerStart = false;
+
+                            dialogueOne = false;
+                            dialogueTwo = false;
+                            dialogueThree = false;
+                            dialogueFour = false;
+                            dialogueFive = false;
+
+                            continueButtonHover = false;
+
+                            screen = Screen.romeosNewGirl;
+                        }
+                    }
+                }
+
+             }
+            //else if (screen == Screen.romeosNewGirl)
+            //{
+
+            //}
+            //else if (screen == Screen.outro)
+            //{
+
+            //}
 
             base.Update(gameTime);
+        
         }
 
         protected override void Draw(GameTime gameTime)
@@ -263,30 +352,63 @@ namespace Monogame_1._5___Summative_Assignment
                 _spriteBatch.Draw(newsbg, window, Color.White);
                 _spriteBatch.Draw(snape, snapeRect, Color.White);
 
-                if (dialogueFive)
+                if (dialogueOne)
                 {
-                    _spriteBatch.Draw(sceneOneDialogueFive, sceneOneDialogueFiveRect, Color.White);
-                }
-                else if (dialogueFour)
-                {
-                    _spriteBatch.Draw(sceneOneDialogueFour, sceneOneDialogueFourRect, Color.White);
-                }
-                else if (dialogueThree)
-                {
-                    _spriteBatch.Draw(sceneOneDialogueThree, sceneOneDialogueThreeRect, Color.White);
+                    _spriteBatch.Draw(sceneOneDialogueOne, sceneOneDialogueOneRect, Color.White);
                 }
                 else if (dialogueTwo)
                 {
                     _spriteBatch.Draw(sceneOneDialogueTwo, sceneOneDialogueTwoRect, Color.White);
                 }
-                else if (dialogueOne)
+                else if (dialogueThree)
                 {
-                    _spriteBatch.Draw(sceneOneDialogueOne, sceneOneDialogueOneRect, Color.White);
+                    _spriteBatch.Draw(sceneOneDialogueThree, sceneOneDialogueThreeRect, Color.White);
                 }
-
-
+                else if (dialogueFour)
+                {
+                    _spriteBatch.Draw(sceneOneDialogueFour, sceneOneDialogueFourRect, Color.White);
+                }
+                else if (dialogueFive)
+                {
+                    _spriteBatch.Draw(sceneOneDialogueFive, sceneOneDialogueFiveRect, Color.White);
+                }
+                
+                if (continueButtonHover)
+                {
+                    _spriteBatch.Draw(continueButton, continueButton_Rect, Color.White);
+                }
             }
-        _spriteBatch.End();
+
+            else if (screen == Screen.julietGossipWithDemon)
+            {
+                _spriteBatch.Draw(hellbg, window, Color.White);
+                _spriteBatch.Draw(juliet, julietRect, Color.White);
+                _spriteBatch.Draw(demon, demonRect, Color.White);
+
+                //if (dialogueOne)
+                //{
+                //    _spriteBatch.Draw(sceneOneDialogueOne, sceneOneDialogueOneRect, Color.White);
+                //}
+                //else if (dialogueTwo)
+                //{
+                //    _spriteBatch.Draw(sceneOneDialogueTwo, sceneOneDialogueTwoRect, Color.White);
+                //}
+                //else if (dialogueThree)
+                //{
+                //    _spriteBatch.Draw(sceneOneDialogueThree, sceneOneDialogueThreeRect, Color.White);
+                //}
+                //else if (dialogueFour)
+                //{
+                //    _spriteBatch.Draw(sceneOneDialogueFour, sceneOneDialogueFourRect, Color.White);
+                //}
+                //else if (dialogueFive)
+                //{
+                //    _spriteBatch.Draw(sceneOneDialogueFive, sceneOneDialogueFiveRect, Color.White);
+                //}
+                
+            }
+
+                _spriteBatch.End();
 
             base.Draw(gameTime);
         }
