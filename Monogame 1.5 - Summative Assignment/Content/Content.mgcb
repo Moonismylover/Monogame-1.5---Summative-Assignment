@@ -25,18 +25,6 @@
 /processorParam:TextureFormat=Color
 /build:Beach.jpg
 
-#begin continueSign.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:continueSign.png
-
 #begin Demon.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -319,6 +307,24 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:scene_3_dialogue_5.png
+
+#begin sceneoneaudio.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sceneoneaudio.wav
+
+#begin scenethreeaudio.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:scenethreeaudio.wav
+
+#begin scenetwoaudio.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:scenetwoaudio.wav
 
 #begin skip.png
 /importer:TextureImporter

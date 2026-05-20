@@ -30,15 +30,13 @@ namespace Monogame_1._5___Summative_Assignment
         bool dialogueFour = false;
         bool dialogueFive = false;
 
-        bool continueButtonHover = false;
-        bool skipButtonHover = false;
-
         bool songPlayed = false;
 
-        Texture2D introbg;
-        Texture2D newsbg;
-        Texture2D hellbg;
-        Texture2D beachbg;
+        Texture2D introBg;
+        Texture2D newsBg;
+        Texture2D hellBg;
+        Texture2D beachBg;
+        Texture2D outroBg;
 
         Texture2D snape;
         Rectangle snapeRect;
@@ -51,8 +49,6 @@ namespace Monogame_1._5___Summative_Assignment
         Texture2D romeosNewGirl;
         Rectangle romeosNewGirlRect;
 
-        Texture2D continueButton;
-        Rectangle continueButton_Rect;
         Texture2D skipButton;
         Rectangle skipButtonRect;
 
@@ -92,7 +88,6 @@ namespace Monogame_1._5___Summative_Assignment
         Rectangle window;
 
         Vector2 snapeSpeed;
-        Vector2 romeoSpeed;
         Vector2 julietSpeed;
         Vector2 demonSpeed;
 
@@ -102,11 +97,19 @@ namespace Monogame_1._5___Summative_Assignment
 
         SoundEffect themeMusic;
         SoundEffectInstance themeInstance;
+        SoundEffect sceneOneAudio;
+        SoundEffectInstance sceneOneAudioInstance;
+        SoundEffect sceneTwoAudio;
+        SoundEffectInstance sceneTwoAudioInstance;
+        SoundEffect sceneThreeAudio;
+        SoundEffectInstance sceneThreeAudioInstance;
 
         Color bgColor = Color.DarkViolet;
 
         MouseState mouseState;
         KeyboardState keyboardState;
+
+        MouseState previousMouseState;
 
         public Game1()
         {
@@ -124,7 +127,7 @@ namespace Monogame_1._5___Summative_Assignment
             _graphics.PreferredBackBufferHeight = 600;
             _graphics.ApplyChanges();
 
-            snapeRect = new Rectangle(-230, 230, 230, 380);
+            snapeRect = new Rectangle(-230, 230, 200, 350);
             sceneOneDialogueOneRect = new Rectangle(270, 150, 200, 200);
             sceneOneDialogueTwoRect = new Rectangle(270, 150, 200, 200);
             sceneOneDialogueThreeRect = new Rectangle(240, 150, 200, 200);
@@ -139,16 +142,21 @@ namespace Monogame_1._5___Summative_Assignment
             sceneTwoDialogueFourRect = new Rectangle(390, 130, 200, 200);
             sceneTwoDialogueFiveRect = new Rectangle(420, 70, 200, 150);
 
-            continueButton_Rect = new Rectangle(595, 5, 200, 100);
-            skipButtonRect = new Rectangle(10, 10, 110, 60);
+            sceneThreeDialogueOneRect = new Rectangle(120, 70, 200, 200);
+            sceneThreeDialogueTwoRect = new Rectangle(160, 70, 150, 150);
+            sceneThreeDialogueThreeRect = new Rectangle(560, 60, 150, 150);
+            sceneThreeDialogueFourRect = new Rectangle(250, 60, 170, 170);
+            sceneThreeDialogueFiveRect = new Rectangle(150, 90, 170, 170);
+
+            skipButtonRect = new Rectangle(10, 10, 140, 50);
 
             snapeSpeed = new Vector2(3, 0);
             julietSpeed = new Vector2(-3, 0);
             demonSpeed = new Vector2(0, 3);
 
-            romeoRect = new Rectangle(450, 400, 100, 100);
-            romeosNewGirlRect = new Rectangle(550, 400, 100, 100);
-           
+            romeoRect = new Rectangle(260, 220, 120, 310);
+            romeosNewGirlRect = new Rectangle(290, 215, 310, 310);
+
             seconds = 0;
 
             base.Initialize();
@@ -158,20 +166,29 @@ namespace Monogame_1._5___Summative_Assignment
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            introbg = Content.Load<Texture2D>("IntroBackground");
-            newsbg = Content.Load<Texture2D>("News");
-            hellbg = Content.Load<Texture2D>("Hell");
-            beachbg = Content.Load<Texture2D>("Beach");
+            introBg = Content.Load<Texture2D>("IntroBackground");
+            newsBg = Content.Load<Texture2D>("News");
+            hellBg = Content.Load<Texture2D>("Hell");
+            beachBg = Content.Load<Texture2D>("Beach");
+            outroBg = Content.Load<Texture2D>("Goodbye");
+
             romeo = Content.Load<Texture2D>("Romeo");
             juliet = Content.Load<Texture2D>("Juliet");
             snape = Content.Load<Texture2D>("Snape");
             demon = Content.Load<Texture2D>("Demon");
             romeosNewGirl = Content.Load<Texture2D>("Romeos_new_girl");
+
             introText = Content.Load<SpriteFont>("IntroText");
+
             themeMusic = Content.Load<SoundEffect>("themeMusic");
             themeInstance = themeMusic.CreateInstance();
+            sceneOneAudio = Content.Load<SoundEffect>("sceneoneaudio");
+            sceneOneAudioInstance = sceneOneAudio.CreateInstance();
+            sceneTwoAudio = Content.Load<SoundEffect>("scenetwoaudio");
+            sceneTwoAudioInstance = sceneTwoAudio.CreateInstance();
+            sceneThreeAudio = Content.Load<SoundEffect>("scenethreeaudio");
+            sceneThreeAudioInstance = sceneThreeAudio.CreateInstance();
 
-            continueButton = Content.Load<Texture2D>("continueSign");
             skipButton = Content.Load<Texture2D>("skip");
 
             sceneOneDialogueOne = Content.Load<Texture2D>("scene_1_dialogue_1");
@@ -217,16 +234,38 @@ namespace Monogame_1._5___Summative_Assignment
                 if (keyboardState.IsKeyDown(Keys.Space) && IsActive)
                 {
                     themeInstance.Stop();
+                    sceneOneAudioInstance.Play();
+
                     screen = Screen.snapeInterview;
+                    seconds = 0;
                 }
                 else if (themeInstance.State == SoundState.Stopped)
                 {
                     screen = Screen.snapeInterview;
+                    sceneOneAudioInstance.Play();
+                    seconds = 0;
                 }
             }
             else if (screen == Screen.snapeInterview)
             {
                 snapeRect.X += (int)snapeSpeed.X;
+
+                if (mouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released && skipButtonRect.Contains(mouseState.Position))
+                {
+                    seconds = 0;
+                    timerStart = false;
+
+                    dialogueOne = false;
+                    dialogueTwo = false;
+                    dialogueThree = false;
+                    dialogueFour = false;
+                    dialogueFive = false;
+
+                    sceneOneAudioInstance.Stop();
+                    sceneTwoAudioInstance.Play();
+
+                    screen = Screen.julietGossipWithDemon;
+                }
 
                 if (snapeRect.X >= 400)
                 {
@@ -259,32 +298,29 @@ namespace Monogame_1._5___Summative_Assignment
                     {
                         dialogueFive = true;
                     }
-                    else if (seconds > 16)
-                    {
-                        continueButtonHover = true; 
-
-                        if (mouseState.LeftButton == ButtonState.Pressed && (continueButton_Rect.Contains(mouseState.Position) || skipButtonRect.Contains(mouseState.Position)))
-                        {
-                            seconds = 0;
-                            timerStart = false;
-
-                            dialogueOne = false;
-                            dialogueTwo = false;
-                            dialogueThree = false;
-                            dialogueFour = false;
-                            dialogueFive = false;
-
-                            continueButtonHover = false;
-
-                            screen = Screen.julietGossipWithDemon;
-                        }
-                    }
                 }
             }
             else if (screen == Screen.julietGossipWithDemon)
             {
                 julietRect.X += (int)julietSpeed.X; 
                 demonRect.Y += (int)demonSpeed.Y;
+
+                if (mouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released && skipButtonRect.Contains(mouseState.Position))
+                {
+                    seconds = 0;
+                    timerStart = false;
+
+                    dialogueOne = false;
+                    dialogueTwo = false;
+                    dialogueThree = false;
+                    dialogueFour = false;
+                    dialogueFive = false;
+
+                    sceneTwoAudioInstance.Stop();
+                    sceneThreeAudioInstance.Play();
+
+                    screen = Screen.romeosNewGirl;
+                }
 
                 if (julietRect.X <= 500)
                 {
@@ -323,51 +359,35 @@ namespace Monogame_1._5___Summative_Assignment
                     {
                         dialogueFive = true;
                     }
-                    else if (seconds > 16)
-                    {
-                        continueButtonHover = true;
-
-                        if (mouseState.LeftButton == ButtonState.Pressed && (continueButton_Rect.Contains(mouseState.Position) || skipButtonRect.Contains(mouseState.Position)))
-                        {
-                            seconds = 0;
-                            timerStart = false;
-
-                            dialogueOne = false;
-                            dialogueTwo = false;
-                            dialogueThree = false;
-                            dialogueFour = false;
-                            dialogueFive = false;
-
-                            continueButtonHover = false;
-
-                            screen = Screen.romeosNewGirl;
-                        }
-                    }
                 }
-
              }
             else if (screen == Screen.romeosNewGirl)
             {
                 snapeRect.X += (int)snapeSpeed.X;
                 julietRect.X += (int)julietSpeed.X;
-                
-                if (julietRect.X <= 200)
+
+                if (mouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released && skipButtonRect.Contains(mouseState.Position))
                 {
-                    julietRect.X = 300;
+                    seconds = 0;
+
+                    sceneThreeAudioInstance.Stop();
+                    themeInstance.Play();
+
+                    screen = Screen.outro;
+                }
+
+                if (julietRect.X <= 550)
+                {
+                    julietRect.X = 550;
                     julietSpeed.X = 0;
                 }
 
-                if (snapeRect.Y >= 100)
+                if (snapeRect.X >= 50)
                 {
-                    snapeRect.Y = 100;
-                    snapeSpeed.Y = 0;
+                    snapeRect.X = 50;
+                    snapeSpeed.X = 0;
 
-                    if (!timerStart)
-                    {
-                        seconds = 0;
-                        timerStart = true;
-                    }
-
+   
                     if (seconds >= 1 && !dialogueOne)
                     {
                         dialogueOne = true;
@@ -388,33 +408,19 @@ namespace Monogame_1._5___Summative_Assignment
                     {
                         dialogueFive = true;
                     }
-                    else if (seconds > 16)
-                    {
-                        continueButtonHover = true;
-
-                        if (mouseState.LeftButton == ButtonState.Pressed && (continueButton_Rect.Contains(mouseState.Position) || skipButtonRect.Contains(mouseState.Position)))
-                        {
-                            seconds = 0;
-                            timerStart = false;
-
-                            dialogueOne = false;
-                            dialogueTwo = false;
-                            dialogueThree = false;
-                            dialogueFour = false;
-                            dialogueFive = false;
-
-                            continueButtonHover = false;
-
-                            screen = Screen.outro;
-                        }
-                    }
                 }
 
             }
-            //else if (screen == Screen.outro)
-            //{
+            else if (screen == Screen.outro)
+            {
+                if (seconds > 5)
+                {
+                    themeInstance.Stop();
+                    Exit();
+                }
+            }
 
-            //}
+            previousMouseState = mouseState;    
 
             base.Update(gameTime);
         
@@ -428,14 +434,14 @@ namespace Monogame_1._5___Summative_Assignment
 
             if (screen == Screen.intro)
             {
-                _spriteBatch.Draw(introbg, window, Color.White);
+                _spriteBatch.Draw(introBg, window, Color.White);
                 _spriteBatch.DrawString(introText, "Welcome to the play of ", new Vector2(140, 200), Color.Black);
                 _spriteBatch.DrawString(introText, "'Interview with Muggles!'", new Vector2(140, 250), Color.Black);
                 _spriteBatch.DrawString(introText, "Please press space to \ncontinue!", new Vector2(140, 300), Color.Black);
             }
             else if (screen == Screen.snapeInterview)
             {
-                _spriteBatch.Draw(newsbg, window, Color.White);
+                _spriteBatch.Draw(newsBg, window, Color.White);
                 _spriteBatch.Draw(skipButton, skipButtonRect, Color.White);
                 _spriteBatch.Draw(snape, snapeRect, Color.White);
 
@@ -459,16 +465,11 @@ namespace Monogame_1._5___Summative_Assignment
                 {
                     _spriteBatch.Draw(sceneOneDialogueOne, sceneOneDialogueOneRect, Color.White);
                 }
-
-                if (continueButtonHover)
-                {
-                    _spriteBatch.Draw(continueButton, continueButton_Rect, Color.White);
-                }
             }
 
             else if (screen == Screen.julietGossipWithDemon)
             {
-                _spriteBatch.Draw(hellbg, window, Color.White);
+                _spriteBatch.Draw(hellBg, window, Color.White);
                 _spriteBatch.Draw(skipButton, skipButtonRect, Color.White);
                 _spriteBatch.Draw(juliet, julietRect, Color.White);
                 _spriteBatch.Draw(demon, demonRect, Color.White);
@@ -493,19 +494,14 @@ namespace Monogame_1._5___Summative_Assignment
                 {
                     _spriteBatch.Draw(sceneTwoDialogueOne, sceneTwoDialogueOneRect, Color.White);
                 }
-
-                if (continueButtonHover)
-                {
-                    _spriteBatch.Draw(continueButton, continueButton_Rect, Color.White);
-                }
             }
 
             else if (screen == Screen.romeosNewGirl)  
             {
-                _spriteBatch.Draw(beachbg, window, Color.White);
+                _spriteBatch.Draw(beachBg, window, Color.White);
                 _spriteBatch.Draw(skipButton, skipButtonRect, Color.White);
-                _spriteBatch.Draw(romeo, romeoRect, Color.White);
                 _spriteBatch.Draw(romeosNewGirl, romeosNewGirlRect, Color.White);
+                _spriteBatch.Draw(romeo, romeoRect, Color.White);
                 _spriteBatch.Draw(juliet, julietRect, Color.White);
                 _spriteBatch.Draw(snape, snapeRect, Color.White);
 
@@ -530,10 +526,10 @@ namespace Monogame_1._5___Summative_Assignment
                     _spriteBatch.Draw(sceneThreeDialogueOne, sceneThreeDialogueOneRect, Color.White);
                 }
 
-                if (continueButtonHover)
-                {
-                    _spriteBatch.Draw(continueButton, continueButton_Rect, Color.White);
-                }
+            }
+            else if (screen == Screen.outro)
+            {
+                _spriteBatch.Draw(outroBg, window, Color.White);
             }
 
             _spriteBatch.End();
@@ -542,41 +538,3 @@ namespace Monogame_1._5___Summative_Assignment
         }
     }
 }
-
-//1.Intro / Title Screen
-
-//i. When the audio stops playing, the animation should advance if the user decides
-//to wait.
-//2. Main Animation Screen(s)
-//a. There needs to be some sort of animation here. What it looks like is entirely up to you.
-//Experiment, try some new things.I’m looking for something interesting/creative.
-//i. For full marks, there needs to be more than 1 phase in this animation.
-//b. This animation may go on forever and require the user to end it or may run to a
-//conclusion and end itself.
-//c. For a Level 4+ there needs to be more than something basic repeating itself.
-//d. You may wish to use some the following (it is not necessary to do all of these things):
-//i.Sound Effects
-//ii.Music
-//iii. Randomness
-//iv. Response to user input (this is not a requirement for a level 4)
-//v. Text
-//3. End Screen
-//a. After the main animation is done, or the user has chosen to end it have some type of
-//farewell screen with some text as credits (do this with text).
-//b. The program can terminate after a set amount or time, or by having the user choose to
-//end it. Remember that if the user needs to do something there must be instructions.
-
-//Things you will need to do:
-//• Plan out what your theme will be.
-//• Plan out what will be on your 3 (or more) screens. Set up an enumeration to draw and run the
-//appropriate logic at the right time.
-//o Your window may change sizes between your title, main and ending screen .
-//• Use photoshop, or https://www.photopea.com/ to crop, resize, and give images transparent
-//backgrounds.
-//o The less scaling your program has to do the better.
-//o It makes a big difference having properly edited images.
-//• Use Audacity to convert and edit sound files to add to your animation.
-//• Keep your code organized.
-//o Be consistent when naming textures, sounds, rectangles, etc.
-//o Be consistent about where and how you initialize content.
-//o Use white space and comments in your code where appropriate.
