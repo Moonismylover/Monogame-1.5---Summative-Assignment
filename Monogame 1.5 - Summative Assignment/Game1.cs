@@ -298,6 +298,23 @@ namespace Monogame_1._5___Summative_Assignment
                     {
                         dialogueFive = true;
                     }
+
+                    if (dialogueFive && seconds >= 21)
+                    {
+                        seconds = 0;
+                        timerStart = false;
+
+                        dialogueOne = false;
+                        dialogueTwo = false;
+                        dialogueThree = false;
+                        dialogueFour = false;
+                        dialogueFive = false;
+
+                        sceneOneAudioInstance.Stop();
+                        sceneTwoAudioInstance.Play();
+
+                        screen = Screen.julietGossipWithDemon;
+                    }
                 }
             }
             else if (screen == Screen.julietGossipWithDemon)
@@ -359,6 +376,23 @@ namespace Monogame_1._5___Summative_Assignment
                     {
                         dialogueFive = true;
                     }
+
+                    if (dialogueFive && seconds >= 21)
+                    {
+                        seconds = 0;
+                        timerStart = false;
+
+                        dialogueOne = false;
+                        dialogueTwo = false;
+                        dialogueThree = false;
+                        dialogueFour = false;
+                        dialogueFive = false;
+
+                        sceneTwoAudioInstance.Stop();
+                        sceneThreeAudioInstance.Play();
+
+                        screen = Screen.romeosNewGirl;
+                    }
                 }
              }
             else if (screen == Screen.romeosNewGirl)
@@ -410,6 +444,15 @@ namespace Monogame_1._5___Summative_Assignment
                     }
                 }
 
+                if (dialogueFive && seconds >= 21)
+                {
+                    seconds = 0;
+
+                    sceneThreeAudioInstance.Stop();
+                    themeInstance.Play();
+
+                    screen = Screen.outro;
+                }
             }
             else if (screen == Screen.outro)
             {
